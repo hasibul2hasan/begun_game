@@ -180,6 +180,11 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(
+              '$_tapCount',
+              style: TextStyle(fontSize: 24.0),
+            ),
+            SizedBox(height: 20.0),
             GestureDetector(
               onTap: () {
                 _incrementTapCount();
@@ -202,11 +207,6 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
                   );
                 },
               ),
-            ),
-            SizedBox(height: 20.0),
-            Text(
-              '$_tapCount',
-              style: TextStyle(fontSize: 24.0),
             ),
             SizedBox(height: 20.0),
             Opacity(
