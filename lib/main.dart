@@ -67,7 +67,7 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
       if (_tapCount % 10 == 0) {
         _changeBackgroundColor();
       }
-      _checkAchievements(); // Check for achievements on every tap
+      _checkAchievements();
       _saveTapCount();
       _controller.forward(from: 0);
     });
@@ -77,7 +77,7 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
     for (var achievement in _achievements) {
       if (_tapCount == achievement.threshold) {
         _showAchievementDialog(achievement.name);
-        break; // Stop checking once one achievement is reached
+        break;
       }
     }
   }
@@ -144,12 +144,11 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
                 return Row(
                   children: [
                     Image.asset(
-                      'assets/eggplant.png', // Replace with your custom icon path
-                      width: 24, // Adjust width as needed
-                      height: 24, // Adjust height as needed
+                      'assets/eggplant.png',
+                      width: 24,
+                      height: 24,
                     ),
-                    SizedBox(
-                        width: 8), // Optional spacing between icon and text
+                    SizedBox(width: 8),
                     Text(
                       '${achievement.name}',
                       style: TextStyle(fontSize: 16.0),
@@ -210,7 +209,7 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
             ),
             SizedBox(height: 20.0),
             Opacity(
-              opacity: 0.0, // Make the button invisible
+              opacity: 0.0,
               child: ElevatedButton(
                 onPressed: _showAchievementsScreen,
                 child: Text('View Achievements'),
