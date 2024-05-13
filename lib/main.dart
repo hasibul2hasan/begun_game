@@ -90,36 +90,40 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
   }
 
   Future<void> _loadTapCount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _tapCount = prefs.getInt('tapCount') ?? 0;
-    });
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _tapCount = prefs.getInt('tapCount') ?? 0;
+      });
+    } catch (e) {
+      print('Error loading tap count: $e');
+    }
   }
 
   Future<void> _saveTapCount() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('tapCount', _tapCount);
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setInt('tapCount', _tapCount);
+    } catch (e) {
+      print('Error saving tap count: $e');
+    }
   }
 
   void _showAchievementDialog(String achievementName) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
-          opacity: 1.0,
-          child: AlertDialog(
-            title: Text('Congratulations!'),
-            content: Text('You have $achievementName'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Close'),
-              ),
-            ],
-          ),
+        return AlertDialog(
+          title: Text('Congratulations!'),
+          content: Text('You have $achievementName'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
         );
       },
     );
@@ -132,40 +136,36 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AnimatedOpacity(
-          duration: Duration(milliseconds: 500),
-          opacity: 1.0,
-          child: AlertDialog(
-            title: Text('Achievements'),
-            content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: completedAchievements.map((achievement) {
-                return Row(
-                  children: [
-                    Image.asset(
-                      'assets/eggplant.png',
-                      width: 24,
-                      height: 24,
-                    ),
-                    SizedBox(width: 8),
-                    Text(
-                      '${achievement.name}',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ],
-                );
-              }).toList(),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Close'),
-              ),
-            ],
+        return AlertDialog(
+          title: Text('Achievements'),
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: completedAchievements.map((achievement) {
+              return Row(
+                children: [
+                  Image.asset(
+                    'assets/eggplant.png',
+                    width: 24,
+                    height: 24,
+                  ),
+                  SizedBox(width: 8),
+                  Text(
+                    '${achievement.name}',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              );
+            }).toList(),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('Close'),
+            ),
+          ],
         );
       },
     );
@@ -209,7 +209,7 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
             ),
             SizedBox(height: 20.0),
             Opacity(
-              opacity: 0.0,
+              opacity: 0.0, // Set opacity to 0 to make the button invisible
               child: ElevatedButton(
                 onPressed: _showAchievementsScreen,
                 child: Text('View Achievements'),
