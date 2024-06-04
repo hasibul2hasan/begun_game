@@ -37,6 +37,7 @@ class _TapCounterHomePageState extends State<TapCounterHomePage>
     Achievement(name: "Ok PP", threshold: 150),
     Achievement(name: "Big PP", threshold: 200),
     Achievement(name: "Masive PP", threshold: 1000),
+       Achievement(name: "Masive Big PP", threshold: 1500),
   ];
 
   @override
